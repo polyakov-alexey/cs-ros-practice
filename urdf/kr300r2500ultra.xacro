@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 
-<robot name="kuka_kr120r2500pro" xmlns:xacro="http://wiki.ros.org/xacro">
-    <xacro:include filename="$(find practice)/urdf/kr120r2500pro_macro.xacro" />
-    <xacro:kuka_kr120r2500pro prefix=""/>
+<robot name="kuka_kr300r2500ultra" xmlns:xacro="http://wiki.ros.org/xacro">
+    <xacro:include filename="$(find practice)/urdf/kr300r2500ultra_macro.xacro" />
+    <xacro:kuka_kr300r2500ultra prefix=""/>
 
     <link name="world"/>
 
@@ -12,6 +12,7 @@
         <origin xyz="0 0 0" rpy="0 0 0"/>
     </joint>
 
+<!--
     <link name="box">
         <visual>
             <geometry>
@@ -30,5 +31,5 @@
         <child link="box"/>
         <origin xyz="2 0.25 1" rpy="0 0 0"/>
     </joint>
-
+-->
 </robot>

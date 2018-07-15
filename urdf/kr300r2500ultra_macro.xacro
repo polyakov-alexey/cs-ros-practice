@@ -3,7 +3,7 @@
 
   <xacro:property name="DEG2RAD" value="0.017453292519943295"/>
 
-  <xacro:macro name="kuka_kr120r2500pro" params="prefix">
+  <xacro:macro name="kuka_kr300r2500ultra" params="prefix">
     <!-- LINKS -->
     <!-- base link -->
     <link name="${prefix}base_link">

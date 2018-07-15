@@ -11,6 +11,10 @@ find_package(catkin REQUIRED COMPONENTS
   tf
   moveit_core
   moveit_ros_planning_interface
+  descartes_trajectory
+  descartes_moveit
+  descartes_planner
+  descartes_utilities
 )
 
 ## System dependencies are found with CMake's conventions
@@ -109,6 +113,10 @@ catkin_package(
     roscpp
     tf
     moveit_ros_planning_interface
+    descartes_trajectory
+    descartes_moveit
+    descartes_planner
+    descartes_utilities
 #  DEPENDS system_lib
 )
 
