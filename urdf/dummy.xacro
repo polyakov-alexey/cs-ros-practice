@@ -1,0 +1,152 @@
+<?xml version="1.0"?>
+
+<robot name="dummy" xmlns:xacro="http://ros.org/wiki/xacro">
+
+<link name="map"/>
+
+<joint name="map__table" type="fixed">
+	<parent link="map"/>
+	<child link="table"/>
+	<origin xyz="0 0 0.25" rpy="0 0 0"/>
+</joint>
+
+<link name="table">
+	<visual>
+		<geometry>
+			<box size="1 1 0.5"/>
+		</geometry>
+		<material name="White">
+			<color rgba="1.0 1.0 1.0 0.9"/>
+		</material>
+	</visual>
+	<collision>
+		<geometry>
+			<box size="1 1 0.5"/>
+		</geometry>
+	</collision>
+</link>
+
+<joint name="table__base_link" type="fixed">
+	<parent link="table"/>
+	<child link="base_link"/>
+	<origin xyz="0 0 0.25" rpy="0 0 0"/>
+</joint>
+ 
+<link name="base_link">
+	<visual>
+		<origin xyz="0 0 0.0325" rpy="0 0 0"/>
+		<geometry>
+			<box size="0.0915 0.09 0.065"/>
+		</geometry>
+		<material name="Blue">
+			<color rgba="0.0 0.0 1.0 0.75"/>
+		</material>
+	</visual>
+	<!--<collision>
+		<origin xyz="0 0 0.0325" rpy="0 0 0"/>
+		<geometry>
+			<box size="0.0915 0.09 0.065"/>
+		</geometry>
+	</collision>-->
+</link>
+
+<joint name="base_link__link_1" type="revolute">
+	<parent link="base_link"/>
+	<child link="link_1"/>
+	<origin xyz="0 0 0.1" rpy="0 0 0"/>
+	<axis xyz="0 1 0"/>
+	<limit effort="1000.0" lower="-3.14" upper="3.14" velocity="0.5"/>
+</joint>
+ 
+<link name="link_1">
+	<visual>
+		<origin xyz="0 0 0.035" rpy="0 0 0"/>
+		<geometry>
+			<box size="0.09 0.09 0.13"/>
+		</geometry>
+		<material name="Blue"/>
+	</visual>
+	<!--<collision>
+		<origin xyz="0 0 0.035" rpy="0 0 0"/>
+		<geometry>
+			<box size="0.09 0.09 0.13"/>
+		</geometry>
+	</collision>-->
+</link>
+
+<joint name="link_1__link_2" type="revolute">
+	<parent link="link_1"/>
+	<child link="link_2"/>
+	<origin xyz="0 0 0.09" rpy="0 0 0"/>
+	<axis xyz="0 1 0"/>
+	<limit effort="1000.0" lower="-3.14" upper="3.14" velocity="0.5"/>
+</joint>
+ 
+<link name="link_2">
+	<visual>
+		<origin xyz="0 0 0.06" rpy="0 0 0"/>
+		<geometry>
+			<box size="0.09 0.09 0.09"/>
+		</geometry>
+		<material name="Blue"/>
+	</visual>
+	<!--<collision>
+		<origin xyz="0 0 0.06" rpy="0 0 0"/>
+		<geometry>
+			<box size="0.09 0.09 0.09"/>
+		</geometry>
+	</collision>-->
+</link>
+
+<joint name="link_2__head" type="revolute">
+	<parent link="link_2"/>
+	<child link="head"/>
+	<origin xyz="0.045 0 0.06" rpy="0 0 0"/>
+	<axis xyz="1 0 0"/>
+	<limit effort="1000.0" lower="-3.14" upper="3.14" velocity="0.5"/>
+</joint>
+ 
+<link name="head">
+	<visual>
+		<origin xyz="0.005 0 0" rpy="0 1.57 0"/>
+		<geometry>
+			<cylinder radius="0.04" length="0.01"/>
+		</geometry>
+		<material name="LightBlue">
+			<color rgba="0.25 0.25 1.0 0.75"/>
+		</material>
+	</visual>
+	<!--<collision>
+		origin xyz="0.005 0 0" rpy="0 1.57 0"/>
+		<geometry>
+			<cylinder radius="0.04" length="0.01"/>
+		</geometry>
+	</collision>-->
+</link>
+
+<joint name="head__laser" type="fixed">
+	<parent link="head"/>
+	<child link="laser"/>
+	<origin xyz="0.01 0 0.02" rpy="0 0 0"/>
+</joint>
+ 
+<link name="laser">
+	<visual>
+		<origin xyz="0.01 0 0" rpy="0 1.57 0"/>
+		<geometry>
+			<cylinder radius="0.005" length="0.02"/>
+		</geometry>
+		<material name="Red">
+			<color rgba="1.0 0.25 0.25 0.75"/>
+		</material>
+	</visual>
+	<!--<collision>
+		<origin xyz="0.01 0 0" rpy="0 1.57 0"/>
+		<geometry>
+			<cylinder radius="0.0005" length="0.02"/>
+		</geometry>
+	</collision>-->
+</link>
+
+
+</robot>

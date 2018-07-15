@@ -1,0 +1,13 @@
+<robot name="kuka" xmlns:xacro="http://wiki.ros.org/xacro">
+
+    <xacro:include filename="$(find practice)/urdf/kr210l150_macro.xacro"/>
+    <xacro:kuka_kr210l150 prefix=""/>
+
+    <link name="world"/>
+
+    <joint name="world__base_link" type="fixed">
+        <parent link="world"/>
+        <child link="base_link"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+</robot>
