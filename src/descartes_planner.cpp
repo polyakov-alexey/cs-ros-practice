@@ -121,22 +121,60 @@ TrajectoryVec makePointsS()
 {
     TrajectoryVec points;
 
-    // Верхняя часть
-    for (float x = 0; x < M_PI * 1.5; x += 0.1)
+    float xOffset = 1.5;
+    float center = 1.25;
+    float radius = 0.25;
+    float step = 0.1; // rad
+
+    // Верхняя прямая
+    for (float y = radius / 2; y > - radius / 2; y -= radius * step)
     {
         Eigen::Affine3d pose;
-        pose = Eigen::Translation3d(1.5, cos(x) * 0.25, sin(x) * 0.25 + 1.5);
+        pose = Eigen::Translation3d(xOffset, y, center + radius * 2);
         pose *= Eigen::AngleAxisd(M_PI/2, Eigen::Vector3d::UnitY());
 
         descartes_core::TrajectoryPtPtr pt = descartes_core::TrajectoryPtPtr(new descartes_trajectory::CartTrajectoryPt(descartes_trajectory::TolerancedFrame(pose)));
         points.push_back(pt);
     }
 
-    // Нижняя часть
-    for (float x = M_PI * 0.5; x > - M_PI; x -= 0.1)
+    // Верхняя дуга
+    for (float x = M_PI / 2; x < M_PI * 1.5; x += step)
     {
         Eigen::Affine3d pose;
-        pose = Eigen::Translation3d(1.5, cos(x) * 0.25, sin(x) * 0.25 + 1);
+        pose = Eigen::Translation3d(xOffset, - radius / 2 + cos(x) * radius, sin(x) * radius + center + radius);
+        pose *= Eigen::AngleAxisd(M_PI/2, Eigen::Vector3d::UnitY());
+
+        descartes_core::TrajectoryPtPtr pt = descartes_core::TrajectoryPtPtr(new descartes_trajectory::CartTrajectoryPt(descartes_trajectory::TolerancedFrame(pose)));
+        points.push_back(pt);
+    }
+
+    // Центральная прямая
+    for (float y = - radius / 2; y < radius / 2; y += radius * step)
+    {
+        Eigen::Affine3d pose;
+        pose = Eigen::Translation3d(xOffset, y, center);
+        pose *= Eigen::AngleAxisd(M_PI/2, Eigen::Vector3d::UnitY());
+
+        descartes_core::TrajectoryPtPtr pt = descartes_core::TrajectoryPtPtr(new descartes_trajectory::CartTrajectoryPt(descartes_trajectory::TolerancedFrame(pose)));
+        points.push_back(pt);
+    }
+
+    // Нижняя дуга
+    for (float x = M_PI / 2; x > - M_PI / 2; x -= step)
+    {
+        Eigen::Affine3d pose;
+        pose = Eigen::Translation3d(xOffset, radius / 2 + cos(x) * radius, sin(x) * radius + center - radius);
+        pose *= Eigen::AngleAxisd(M_PI/2, Eigen::Vector3d::UnitY());
+
+        descartes_core::TrajectoryPtPtr pt = descartes_core::TrajectoryPtPtr(new descartes_trajectory::CartTrajectoryPt(descartes_trajectory::TolerancedFrame(pose)));
+        points.push_back(pt);
+    }
+
+    // Нижняя прямая
+    for (float y = radius / 2; y > - radius / 2; y -= radius * step)
+    {
+        Eigen::Affine3d pose;
+        pose = Eigen::Translation3d(xOffset, y, center - radius * 2);
         pose *= Eigen::AngleAxisd(M_PI/2, Eigen::Vector3d::UnitY());
 
         descartes_core::TrajectoryPtPtr pt = descartes_core::TrajectoryPtPtr(new descartes_trajectory::CartTrajectoryPt(descartes_trajectory::TolerancedFrame(pose)));
