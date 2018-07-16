@@ -98,15 +98,45 @@ void GoToStartPosition()
     ROS_INFO("-- Done\n");
 }
 
-// Создание массива точек-положений
+// Создание массива точек-положений - два круга
 TrajectoryVec makePointsCircle()
 {
     TrajectoryVec points;
 
-    for (float x = M_PI * 0.5; x < M_PI * 4.5; x += 0.5)
+    for (float x = 0.5; x < M_PI * 4.5; x += 0.25)
     {
         Eigen::Affine3d pose;
         pose = Eigen::Translation3d(1.25, cos(x) * 0.25, sin(x) * 0.25 + 1); // for abb x=1.25
+        pose *= Eigen::AngleAxisd(M_PI/2, Eigen::Vector3d::UnitY());
+
+        descartes_core::TrajectoryPtPtr pt = descartes_core::TrajectoryPtPtr(new descartes_trajectory::CartTrajectoryPt(descartes_trajectory::TolerancedFrame(pose)));
+        points.push_back(pt);
+    }
+
+    return points;
+}
+
+// Создание массива точек-положений - буква S
+TrajectoryVec makePointsS()
+{
+    TrajectoryVec points;
+
+    // Верхняя часть
+    for (float x = 0; x < M_PI * 1.5; x += 0.1)
+    {
+        Eigen::Affine3d pose;
+        pose = Eigen::Translation3d(1.5, cos(x) * 0.25, sin(x) * 0.25 + 1.5);
+        pose *= Eigen::AngleAxisd(M_PI/2, Eigen::Vector3d::UnitY());
+
+        descartes_core::TrajectoryPtPtr pt = descartes_core::TrajectoryPtPtr(new descartes_trajectory::CartTrajectoryPt(descartes_trajectory::TolerancedFrame(pose)));
+        points.push_back(pt);
+    }
+
+    // Нижняя часть
+    for (float x = M_PI * 0.5; x > - M_PI; x -= 0.1)
+    {
+        Eigen::Affine3d pose;
+        pose = Eigen::Translation3d(1.5, cos(x) * 0.25, sin(x) * 0.25 + 1);
         pose *= Eigen::AngleAxisd(M_PI/2, Eigen::Vector3d::UnitY());
 
         descartes_core::TrajectoryPtPtr pt = descartes_core::TrajectoryPtPtr(new descartes_trajectory::CartTrajectoryPt(descartes_trajectory::TolerancedFrame(pose)));
@@ -127,7 +157,8 @@ int main(int argc, char **argv)
     //GoToStartPosition();
 
     // Создание массива точек-положений
-    TrajectoryVec points = makePointsCircle();
+    //TrajectoryVec points = makePointsCircle();
+    TrajectoryVec points = makePointsS();
 
     // Подключение робота в планировщик
     descartes_core::RobotModelPtr model (new descartes_moveit::MoveitStateAdapter);
@@ -159,7 +190,7 @@ int main(int argc, char **argv)
     // Перевод данных из формата descartes в формат, который понимает ros
     std::vector<std::string> names;
     n.getParam("controller_joint_names", names);
-    trajectory_msgs::JointTrajectory joint_solution = resultToJointTrajectory(result, *model, names, 1.0);
+    trajectory_msgs::JointTrajectory joint_solution = resultToJointTrajectory(result, *model, names, 0.25);
 
     // Выполнение пути роботом
     if (!executeTrajectory(joint_solution))
