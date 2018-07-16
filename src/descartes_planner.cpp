@@ -4,6 +4,7 @@
 #include <descartes_trajectory/cart_trajectory_pt.h>
 #include <descartes_moveit/moveit_state_adapter.h>
 #include <descartes_planner/dense_planner.h>
+#include <descartes_planner/sparse_planner.h>
 #include <control_msgs/FollowJointTrajectoryAction.h>
 #include <actionlib/client/simple_action_client.h>
 
@@ -262,7 +263,8 @@ int main(int argc, char **argv)
     }
 
     // Создание планнера и подключение в него модели робота
-    descartes_planner::DensePlanner planner;
+    //descartes_planner::DensePlanner planner;
+    descartes_planner::SparsePlanner planner;
     planner.initialize(model);
 
     // Передача пути планировщику
