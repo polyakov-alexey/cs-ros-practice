@@ -1,3 +1,4 @@
+#include <cmath>
 #include <ros/ros.h>
 #include <moveit/move_group_interface/move_group_interface.h>
 #include <descartes_trajectory/cart_trajectory_pt.h>
@@ -72,6 +73,7 @@ bool executeTrajectory(const trajectory_msgs::JointTrajectory &trajectory)
 }
 
 // Переход в начальное положение (2, 0, 1)
+// НЕ ИСПОЛЬЗУЕТСЯ
 void GoToStartPosition()
 {
     ROS_INFO("-- Goint to start position\n");
@@ -97,29 +99,19 @@ void GoToStartPosition()
 }
 
 // Создание массива точек-положений
-TrajectoryVec makePoints()
+TrajectoryVec makePointsCircle()
 {
     TrajectoryVec points;
 
-    // 10 точек подъема вверх
-    for (int i = 0; i < 10; i++)
+    for (float x = M_PI * 0.5; x < M_PI * 4.5; x += 0.5)
     {
         Eigen::Affine3d pose;
-        pose = Eigen::Translation3d(1.25, 0, 1 + 0.05 * i); // for abb
+        pose = Eigen::Translation3d(1.25, cos(x) * 0.25, sin(x) * 0.25 + 1); // for abb x=1.25
         pose *= Eigen::AngleAxisd(M_PI/2, Eigen::Vector3d::UnitY());
 
         descartes_core::TrajectoryPtPtr pt = descartes_core::TrajectoryPtPtr(new descartes_trajectory::CartTrajectoryPt(descartes_trajectory::TolerancedFrame(pose)));
         points.push_back(pt);
     }
-/*
-    // 5 точек вправо
-    for (int i = 0; i < 5; i++)
-    {
-        Eigen::Affine3d pose;
-        pose = Eigen::Translation3d(1.25, 0.04 * i, 1.3);
-        descartes_core::TrajectoryPtPtr pt = descartes_core::TrajectoryPtPtr(new descartes_trajectory::CartTrajectoryPt(descartes_trajectory::TolerancedFrame(pose)));
-        points.push_back(pt);
-    }*/
 
     return points;
 }
@@ -132,10 +124,10 @@ int main(int argc, char **argv)
     spinner.start();
 
     // Переход в начальное положение (2, 0, 1)
-    GoToStartPosition();
+    //GoToStartPosition();
 
     // Создание массива точек-положений
-    TrajectoryVec points = makePoints();
+    TrajectoryVec points = makePointsCircle();
 
     // Подключение робота в планировщик
     descartes_core::RobotModelPtr model (new descartes_moveit::MoveitStateAdapter);
