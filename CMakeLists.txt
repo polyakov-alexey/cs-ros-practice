@@ -144,6 +144,7 @@ include_directories(
 ## Declare a C++ executable
   add_executable(keyboard_control src/keyboard_control.cpp)
   add_executable(cs_descartes_planner src/descartes_planner.cpp)
+  add_executable(cs_moveit_planner src/moveit_planner.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
@@ -152,6 +153,7 @@ include_directories(
 ## Specify libraries to link a library or executable target against
   target_link_libraries(keyboard_control ${catkin_LIBRARIES} )
   target_link_libraries(cs_descartes_planner ${catkin_LIBRARIES} )
+  target_link_libraries(cs_moveit_planner ${catkin_LIBRARIES} )
 
 #############
 ## Install ##
