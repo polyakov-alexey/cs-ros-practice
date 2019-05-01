@@ -28,23 +28,26 @@
     <arg name="load_robot_description" value="true"/>
   </include>
 
-  <rosparam param="controller_joint_names">['joint_a1','joint_a2','joint_a3','joint_a4','joint_a5','joint_a6']</rosparam>
   <!-- COMMONSENSE -->
   <group if="$(arg sim)">
+<!--
+    <rosparam param="controller_joint_names">['joint_a1','joint_a2','joint_a3','joint_a4','joint_a5','joint_a6']</rosparam>
+-->
+<!--
     <include file="$(find industrial_robot_simulator)/launch/robot_interface_simulator.launch">
       <rosparam param="controller_joint_names" value="['joint_a1','joint_a2','joint_a3','joint_a4','joint_a5','joint_a6']"/>
     </include>
+-->
   </group>
+
   <!-- If needed, broadcast static tf for robot root -->
   
 
   <!-- We do not have a robot connected, so publish fake joint states -->
-  <!--
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
     <param name="use_gui" value="$(arg use_gui)"/>
     <rosparam param="source_list">[move_group/fake_controller_joint_states]</rosparam>
   </node>
-  -->
 
   <!-- Given the published joint states, publish tf for the robot links -->
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" />
@@ -67,7 +70,5 @@
   <include file="$(find kr300r2500ultra_moveit_config)/launch/default_warehouse_db.launch" if="$(arg db)">
     <arg name="moveit_warehouse_database_path" value="$(arg db_path)"/>
   </include>
-
-  <!--COMMONSENSE-->
 
 </launch>

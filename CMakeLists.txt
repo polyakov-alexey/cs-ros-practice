@@ -11,10 +11,10 @@ find_package(catkin REQUIRED COMPONENTS
   tf
   moveit_core
   moveit_ros_planning_interface
-  descartes_trajectory
-  descartes_moveit
-  descartes_planner
-  descartes_utilities
+#  descartes_trajectory
+#  descartes_moveit
+#  descartes_planner
+#  descartes_utilities
 )
 
 ## System dependencies are found with CMake's conventions
@@ -113,10 +113,10 @@ catkin_package(
     roscpp
     tf
     moveit_ros_planning_interface
-    descartes_trajectory
-    descartes_moveit
-    descartes_planner
-    descartes_utilities
+#    descartes_trajectory
+#    descartes_moveit
+#    descartes_planner
+#    descartes_utilities
 #  DEPENDS system_lib
 )
 
@@ -143,7 +143,7 @@ include_directories(
 
 ## Declare a C++ executable
   add_executable(keyboard_control src/keyboard_control.cpp)
-  add_executable(cs_descartes_planner src/descartes_planner.cpp)
+#  add_executable(cs_descartes_planner src/descartes_planner.cpp)
   add_executable(cs_moveit_planner src/moveit_planner.cpp)
 
 ## Add cmake target dependencies of the executable
@@ -152,7 +152,7 @@ include_directories(
 
 ## Specify libraries to link a library or executable target against
   target_link_libraries(keyboard_control ${catkin_LIBRARIES} )
-  target_link_libraries(cs_descartes_planner ${catkin_LIBRARIES} )
+#  target_link_libraries(cs_descartes_planner ${catkin_LIBRARIES} )
   target_link_libraries(cs_moveit_planner ${catkin_LIBRARIES} )
 
 #############
